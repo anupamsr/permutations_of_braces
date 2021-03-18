@@ -33,16 +33,15 @@ bool is_balanced(const vector<char> & str)
     return s.size() == 0;
 }
 
-
 auto get_braces(const size_t n)
 {
-    set<string> res;
+    set<vector<char>> res;
     switch (n)
     {
     case 0:
         return res;
     case 1:
-        res.insert("{}");
+        res.insert({'{', '}'});
         return res;
     }
     auto prev_results = get_braces(n - 1);
@@ -58,8 +57,7 @@ auto get_braces(const size_t n)
                 new_str.insert(new_str.begin() + j, '}');
                 if (is_balanced(new_str))
                 {
-                    string str(new_str.begin(), new_str.end());
-                    res.insert(str);
+                    res.insert(new_str);
                 }
             }
         }
@@ -70,14 +68,21 @@ auto get_braces(const size_t n)
 void print_results(const size_t n)
 {
     auto res = get_braces(n);
+    cout << "Total " << res.size() << " permutations for n = " << n << ":" << endl;
     for (const auto & str : res)
     {
-        cout << str << endl;
+        string out(str.begin(), str.end());
+        cout << out << endl;
     }
 }
 
 int main()
 {
+    print_results(0);
+    print_results(1);
+    print_results(2);
+    print_results(3);
     print_results(4);
+    print_results(5);
     return 0;
 }
